@@ -1,12 +1,16 @@
 package com.sistema_financeiro.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
+import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
 import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.service.UserService;
@@ -22,12 +26,29 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserBodyDTO dto){
+
+        try { 
         user create = userService.createUser(dto);
         ResponseUserDTO responseUserDTO = new ResponseUserDTO(
             create.getNome(),
             create.getEmail()
         ); 
         return ResponseEntity.created(null).body(responseUserDTO);
+
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseUserAndRendaDTO> getUserById(@PathVariable Integer id){
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
 }
