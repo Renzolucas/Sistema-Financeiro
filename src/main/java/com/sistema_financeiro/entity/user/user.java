@@ -30,13 +30,22 @@ public class user {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nome")
+    @Column(
+        name = "nome", 
+        unique = false, 
+        nullable = false)
     private String nome;
 
-    @Column(unique = true)
+    @Column(
+        name = "email",
+        unique = true, 
+        nullable = false)
     private String email;
 
-    @Column(name = "senha")
+    @Column(
+        name = "senha",
+        unique = false, 
+        nullable = false)
     private String senha;
 
     @OneToMany(mappedBy = "user")
