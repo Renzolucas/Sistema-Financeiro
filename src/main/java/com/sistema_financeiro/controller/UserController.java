@@ -53,7 +53,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseUserAndRendaDTO> getUserById(@PathVariable Integer id){
-        return ResponseEntity.ok(userService.getUserById(id));
+        try {
+            return ResponseEntity.ok(userService.getUserById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+        
     }
 
     @PutMapping("/{id}")
