@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
+import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
 import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.repository.UserRepository;
 
@@ -61,6 +62,20 @@ public class UserService {
             userBruto.getEmail(),
             userBruto.getRendas(),
             userBruto.getGastos()
+        );
+    }
+
+    public ResponseUserDTO updateUser(Integer id, ResponseUserDTO dto){
+        user user = userRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Usuário não encontrado"));
+        
+        user.setNome(dto.nome());
+        user.setEmail(dto.email());
+        userRepository.save(user);
+
+        return new ResponseUserDTO(
+            user.getNome(),
+            user.getEmail()
         );
     }
 }
