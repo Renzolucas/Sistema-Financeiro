@@ -1,5 +1,7 @@
 package com.sistema_financeiro.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.sistema_financeiro.entity.renda.dto.RendaBodyDTO;
@@ -26,5 +28,16 @@ public class RendaService {
         renda.setDataHora(dto.dataHora());
         
         return rendaRepository.save(renda);
+    }
+    //GET COM BASE NO ID DE USER
+    public List<?> listagemId(Integer userId){
+        
+        userRepository.findById(userId)
+            .orElseThrow(()-> new RuntimeException("Usuario nao encontrado"));
+        List<renda> buscarRendas = rendaRepository.findByUserId(userId);
+        if(buscarRendas.isEmpty()){
+            throw new RuntimeException("Not Found");
+        }
+        return buscarRendas;
     }
 }

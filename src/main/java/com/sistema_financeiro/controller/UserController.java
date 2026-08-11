@@ -1,5 +1,7 @@
 package com.sistema_financeiro.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,7 +77,7 @@ public class UserController {
         }
     }
     //POST RENDA
-    @PostMapping("/{userId}")
+    @PostMapping("/{userId}/rendas")
     public ResponseEntity<?> createRenda(
         @PathVariable Integer userId,
         @Valid @RequestBody RendaBodyDTO dto
@@ -90,5 +92,11 @@ public class UserController {
         }catch(RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{userId}/rendas")
+    public ResponseEntity<List<?>> buscarRenda(@PathVariable Integer userId){
+        List<?> rendaLista = rendaService.listagemId(userId);
+        return ResponseEntity.ok().body(rendaLista);
     }
 }
