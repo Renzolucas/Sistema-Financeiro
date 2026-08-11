@@ -10,7 +10,6 @@ import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
 import com.sistema_financeiro.entity.user.user;
-import com.sistema_financeiro.repository.RendaRepository;
 import com.sistema_financeiro.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +19,6 @@ import lombok.AllArgsConstructor;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
-    private final RendaRepository rendaRepository;
     
     //POST
     public user createUser(CreateUserBodyDTO dto){
