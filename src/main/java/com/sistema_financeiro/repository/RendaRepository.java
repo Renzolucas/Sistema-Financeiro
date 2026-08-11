@@ -1,5 +1,9 @@
 package com.sistema_financeiro.repository;
 
-public class RendaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.sistema_financeiro.entity.renda.renda;
+
+public interface RendaRepository extends JpaRepository<renda, Integer>{
     
 }
