@@ -31,72 +31,52 @@ public class UserController {
     private final UserService userService;
     private final RendaService rendaService;
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserBodyDTO dto){
-
-        try { 
+    public ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody CreateUserBodyDTO dto){
             user create = userService.createUser(dto);
             ResponseUserDTO responseUserDTO = new ResponseUserDTO(
                 create.getNome(),
                 create.getEmail()
         ); 
             return ResponseEntity.created(null).body(responseUserDTO);
-
-        }catch (RuntimeException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id){
-        try{userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-            
-        }catch (RuntimeException e){
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseUserAndRendaDTO> getUserById(@PathVariable Integer id){
-        try {
-            return ResponseEntity.ok(userService.getUserById(id));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-        
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer id, @Valid @RequestBody ResponseUserDTO dto){
-        try{
+    public ResponseEntity<ResponseUserDTO> updateUser(
+        @PathVariable Integer id, 
+        @Valid @RequestBody ResponseUserDTO dto){
             ResponseUserDTO user = userService.updateUser(id, dto);
             return ResponseEntity.ok().body(user);
-        }catch(RuntimeException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
     //POST RENDA
     @PostMapping("/{userId}/rendas")
-    public ResponseEntity<?> createRenda(
+    public ResponseEntity<RendaBodyDTO> createRenda(
         @PathVariable Integer userId,
         @Valid @RequestBody RendaBodyDTO dto
     ){
-        try{
             renda create = rendaService.createRenda(userId, dto);
             RendaBodyDTO rendaDto = new RendaBodyDTO(
                 create.getValor(),
                 create.getDataHora()
             );
             return ResponseEntity.created(null).body(rendaDto);
-        }catch(RuntimeException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
     @GetMapping("/{userId}/rendas")
-    public ResponseEntity<List<?>> buscarRenda(@PathVariable Integer userId){
-        List<?> rendaLista = rendaService.listagemId(userId);
+    public ResponseEntity<List<renda>> buscarRenda(@PathVariable Integer userId){
+        List<renda> rendaLista = rendaService.listagemId(userId);
         return ResponseEntity.ok().body(rendaLista);
     }
 }

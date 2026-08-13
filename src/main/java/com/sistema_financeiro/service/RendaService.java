@@ -21,7 +21,7 @@ public class RendaService {
     //POST
     public renda createRenda(Integer userId, RendaBodyDTO dto){
         user usuario = userRepository.findById(userId)
-            .orElseThrow(()-> new RuntimeException("Usuario nao encontrado"));
+            .orElseThrow(()-> new RuntimeException("Not Found"));
         renda renda = new renda();
         renda.setUser(usuario);
         renda.setValor(dto.valor());
@@ -29,15 +29,38 @@ public class RendaService {
         
         return rendaRepository.save(renda);
     }
-    //GET COM BASE NO ID DE USER
-    public List<?> listagemId(Integer userId){
+    //GET BUSCAR RENDAS NO USER(ID)
+    public List<renda> listagemId(Integer userId){
         
         userRepository.findById(userId)
-            .orElseThrow(()-> new RuntimeException("Usuario nao encontrado"));
+            .orElseThrow(()-> new RuntimeException("Not Found"));
         List<renda> buscarRendas = rendaRepository.findByUserId(userId);
         if(buscarRendas.isEmpty()){
             throw new RuntimeException("Not Found");
         }
         return buscarRendas;
+    }
+    //GET BUSCAR RENDA COM BASE NO ID
+    public RendaBodyDTO listagemIdRendas(Integer id){
+        renda rendas = rendaRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Not Found"));        
+        return new RendaBodyDTO(
+            rendas.getValor(),
+            rendas.getDataHora()
+        );
+    }
+    //PUT EDITAR ROTA COM BASE NO ID
+    public RendaBodyDTO editarRenda(Integer id, RendaBodyDTO dto){
+        renda buscarRenda = rendaRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Not Found"));
+
+        buscarRenda.setValor(dto.valor());
+        buscarRenda.setDataHora(dto.dataHora());
+        rendaRepository.save(buscarRenda);
+
+        return new RendaBodyDTO(
+            buscarRenda.getValor(),
+            buscarRenda.getDataHora()
+        );
     }
 }
