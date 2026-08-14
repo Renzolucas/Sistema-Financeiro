@@ -1,6 +1,7 @@
 package com.sistema_financeiro.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema_financeiro.entity.gasto.dto.GastoBodyDTO;
 import com.sistema_financeiro.entity.gasto.gasto;
@@ -32,5 +33,11 @@ public class GastoService {
             gasto.getValor(),
             gasto.getCategoria()
         );
+    }
+    @Transactional
+    public void deletarGasto(Integer id){
+        gasto gastos = gastoRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Not found Gasto"));
+        gastoRepository.delete(gastos);
     }
 }
