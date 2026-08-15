@@ -1,5 +1,7 @@
 package com.sistema_financeiro.entity.gasto;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema_financeiro.entity.gasto.enums.Categoria;
 import com.sistema_financeiro.entity.user.user;
@@ -31,6 +33,8 @@ public class gasto {
     private String nome;
 
     private float valor;
+
+    private LocalDateTime dataHora;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
