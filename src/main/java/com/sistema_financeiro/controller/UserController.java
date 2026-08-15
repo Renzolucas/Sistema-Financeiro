@@ -2,6 +2,7 @@ package com.sistema_financeiro.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,5 +84,12 @@ public class UserController {
     ){
         GastoBodyDTO create = gastoService.createBody(userId, dto);
         return ResponseEntity.created(null).body(create);
+    }
+
+    //GET GASTO
+    @GetMapping("/{userId}/gastos")
+    public ResponseEntity<List<GastoBodyDTO>> listagemDeGastoPorIdUser(@PathVariable Integer userId){
+        List<GastoBodyDTO> listagem = gastoService.listagemIdDeUser(userId);
+        return ResponseEntity.ok().body(listagem);
     }
 }
