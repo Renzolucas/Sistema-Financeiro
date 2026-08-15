@@ -32,7 +32,7 @@ public class gasto {
 
     private String nome;
 
-    private float valor;
+    private Float valor;
 
     private LocalDateTime dataHora;
 

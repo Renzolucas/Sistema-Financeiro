@@ -6,7 +6,7 @@ import com.sistema_financeiro.entity.gasto.enums.Categoria;
 
 public record GastoBodyDTO(
     String nome,
-    float valor,
+    Float valor,
     Categoria categoria,
     LocalDateTime dataHora
 ) {}
