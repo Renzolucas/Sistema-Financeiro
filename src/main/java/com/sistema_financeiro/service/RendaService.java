@@ -10,10 +10,10 @@ import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.repository.RendaRepository;
 import com.sistema_financeiro.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RendaService {
     private final RendaRepository rendaRepository;
     private final UserRepository userRepository;

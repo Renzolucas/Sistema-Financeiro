@@ -2,7 +2,6 @@ package com.sistema_financeiro.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +11,12 @@ import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
 import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
+    
     private final UserRepository userRepository;
     
     //POST

@@ -9,10 +9,10 @@ import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.repository.GastoRepository;
 import com.sistema_financeiro.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GastoService {
     private final GastoRepository gastoRepository;
     private final UserRepository userRepository;
