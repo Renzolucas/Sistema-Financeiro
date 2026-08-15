@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
-import com.sistema_financeiro.entity.user.user;
+import com.sistema_financeiro.entity.user.User;
 import com.sistema_financeiro.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     
     //MODELO DTO
-    public ResponseUserDTO userDTO(user users){
+    public ResponseUserDTO userDTO(User users){
             return new ResponseUserDTO(
             users.getNome(),
             users.getEmail()
@@ -33,10 +33,10 @@ public class UserService {
         if(dto.nome() == null || dto.email() == null || dto.senha() == null){throw new RuntimeException("Todos os campos são obrigatórios");}
 
         //VALIDAÇÃO DE EMAIL REPETIDO
-        Optional<user> emailRepetido = userRepository.findByEmail(dto.email());
+        Optional<User> emailRepetido = userRepository.findByEmail(dto.email());
         if(emailRepetido.isPresent()){throw new RuntimeException("Email já cadastrado");}
         //CRIO UM ESPAÇO PARA O NOVO OBJETO USER
-        user users = new user();
+        User users = new User();
 
         //SETO OS CAMPOS COM O DTO QUE VEIO DA WEB
         users.setNome(dto.nome());
@@ -54,7 +54,7 @@ public class UserService {
         if(id == null){throw new RuntimeException("Id não pode ser nulo");}
 
         //BUSCO O USUÁRIO NO BANCO DE DADOS, SE NÃO ENCONTRAR LANÇO UMA EXCEÇÃO
-        user userBruto = userRepository.findById(id)
+        User userBruto = userRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         return new ResponseUserAndRendaDTO(
@@ -67,7 +67,7 @@ public class UserService {
 
     //PUT
     public ResponseUserDTO updateUser(Integer id, ResponseUserDTO dto){
-        user users = userRepository.findById(id)
+        User users = userRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("Usuário não encontrado"));
         
         users.setNome(dto.nome());
@@ -80,7 +80,7 @@ public class UserService {
     //DELETE
     @Transactional
     public void deleteUser(Integer id){
-        Optional<user> user = userRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
         if(user.isPresent() && user.get().getId().equals(id)){
             userRepository.deleteById(id);

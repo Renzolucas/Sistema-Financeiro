@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema_financeiro.entity.gasto.dto.GastoBodyDTO;
+import com.sistema_financeiro.entity.renda.Renda;
 import com.sistema_financeiro.entity.renda.dto.RendaBodyDTO;
-import com.sistema_financeiro.entity.renda.renda;
 import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
@@ -70,8 +70,8 @@ public class UserController {
     }
     //GET BUSCAR TODAS RENDAS DE ID USER
     @GetMapping("/{userId}/rendas")
-    public ResponseEntity<List<renda>> buscarRenda(@PathVariable Integer userId){
-        List<renda> rendaLista = rendaService.listagemId(userId);
+    public ResponseEntity<List<Renda>> buscarRenda(@PathVariable Integer userId){
+        List<Renda> rendaLista = rendaService.listagemId(userId);
         return ResponseEntity.ok().body(rendaLista);
     }
     

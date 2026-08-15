@@ -4,8 +4,8 @@ package com.sistema_financeiro.entity.user;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sistema_financeiro.entity.gasto.gasto;
-import com.sistema_financeiro.entity.renda.renda;
+import com.sistema_financeiro.entity.gasto.Gasto;
+import com.sistema_financeiro.entity.renda.Renda;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class user {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -50,10 +50,10 @@ public class user {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<renda> rendas;
+    private List<Renda> rendas;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<gasto> gastos;
+    private List<Gasto> gastos;
 
 }
