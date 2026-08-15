@@ -18,7 +18,6 @@ import com.sistema_financeiro.entity.renda.renda;
 import com.sistema_financeiro.entity.user.dto.CreateUserBodyDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserAndRendaDTO;
 import com.sistema_financeiro.entity.user.dto.ResponseUserDTO;
-import com.sistema_financeiro.entity.user.user;
 import com.sistema_financeiro.service.GastoService;
 import com.sistema_financeiro.service.RendaService;
 import com.sistema_financeiro.service.UserService;
@@ -35,12 +34,8 @@ public class UserController {
     private final GastoService gastoService;
     @PostMapping
     public ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody CreateUserBodyDTO dto){
-            user create = userService.createUser(dto);
-            ResponseUserDTO responseUserDTO = new ResponseUserDTO(
-                create.getNome(),
-                create.getEmail()
-        ); 
-            return ResponseEntity.created(null).body(responseUserDTO);
+            ResponseUserDTO create = userService.createUser(dto);
+            return ResponseEntity.created(null).body(create);
         
     }
 
@@ -59,7 +54,8 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<ResponseUserDTO> updateUser(
         @PathVariable Integer id, 
-        @Valid @RequestBody ResponseUserDTO dto){
+        @Valid @RequestBody ResponseUserDTO dto
+    ){
             ResponseUserDTO user = userService.updateUser(id, dto);
             return ResponseEntity.ok().body(user);
     }
@@ -69,14 +65,10 @@ public class UserController {
         @PathVariable Integer userId,
         @Valid @RequestBody RendaBodyDTO dto
     ){
-            renda create = rendaService.createRenda(userId, dto);
-            RendaBodyDTO rendaDto = new RendaBodyDTO(
-                create.getValor(),
-                create.getDataHora()
-            );
-            return ResponseEntity.created(null).body(rendaDto);
+            RendaBodyDTO create = rendaService.createRenda(userId, dto);
+            return ResponseEntity.created(null).body(create);
     }
-    //GET BUSCAR TODAS RENDA DE ID USER
+    //GET BUSCAR TODAS RENDAS DE ID USER
     @GetMapping("/{userId}/rendas")
     public ResponseEntity<List<renda>> buscarRenda(@PathVariable Integer userId){
         List<renda> rendaLista = rendaService.listagemId(userId);

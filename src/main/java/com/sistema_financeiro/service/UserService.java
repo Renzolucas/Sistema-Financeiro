@@ -19,8 +19,16 @@ public class UserService {
     
     private final UserRepository userRepository;
     
+    //MODELO DTO
+    public ResponseUserDTO userDTO(user users){
+            return new ResponseUserDTO(
+            users.getNome(),
+            users.getEmail()
+        ); 
+    }
+
     //POST
-    public user createUser(CreateUserBodyDTO dto){
+    public ResponseUserDTO createUser(CreateUserBodyDTO dto){
         //VERIFICO SE NADA É NULL
         if(dto.nome() == null || dto.email() == null || dto.senha() == null){throw new RuntimeException("Todos os campos são obrigatórios");}
 
@@ -28,26 +36,16 @@ public class UserService {
         Optional<user> emailRepetido = userRepository.findByEmail(dto.email());
         if(emailRepetido.isPresent()){throw new RuntimeException("Email já cadastrado");}
         //CRIO UM ESPAÇO PARA O NOVO OBJETO USER
-        user user = new user();
+        user users = new user();
 
         //SETO OS CAMPOS COM O DTO QUE VEIO DA WEB
-        user.setNome(dto.nome());
-        user.setEmail(dto.email()); 
-        user.setSenha(dto.senha());
+        users.setNome(dto.nome());
+        users.setEmail(dto.email()); 
+        users.setSenha(dto.senha());
 
         //SALVO O NOVO OBJETO USER NO BANCO DE DADOS E RETORNO ELE
-        return userRepository.save(user);
-    }
-
-    //DELETE
-    @Transactional
-    public void deleteUser(Integer id){
-        Optional<user> user = userRepository.findById(id);
-
-        if(user.isPresent() && user.get().getId().equals(id)){
-            userRepository.deleteById(id);
-
-        }else{throw new RuntimeException("Usuário não encontrado");}   
+        userRepository.save(users);
+        return userDTO(users);
     }
 
     //BUSCAR COM BASE EM ID
@@ -66,18 +64,28 @@ public class UserService {
             userBruto.getGastos()
         );
     }
+
     //PUT
     public ResponseUserDTO updateUser(Integer id, ResponseUserDTO dto){
-        user user = userRepository.findById(id)
+        user users = userRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("Usuário não encontrado"));
         
-        user.setNome(dto.nome());
-        user.setEmail(dto.email());
-        userRepository.save(user);
+        users.setNome(dto.nome());
+        users.setEmail(dto.email());
+        userRepository.save(users);
 
-        return new ResponseUserDTO(
-            user.getNome(),
-            user.getEmail()
-        );
+        return userDTO(users);
     }
+
+    //DELETE
+    @Transactional
+    public void deleteUser(Integer id){
+        Optional<user> user = userRepository.findById(id);
+
+        if(user.isPresent() && user.get().getId().equals(id)){
+            userRepository.deleteById(id);
+
+        }else{throw new RuntimeException("Usuário não encontrado");}   
+    }
+
 }
