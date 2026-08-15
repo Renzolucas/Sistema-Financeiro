@@ -3,6 +3,7 @@ package com.sistema_financeiro.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema_financeiro.entity.renda.dto.RendaBodyDTO;
 import com.sistema_financeiro.entity.renda.renda;
@@ -70,5 +71,14 @@ public class RendaService {
         rendaRepository.save(rendas);
 
         return rendaDTO(rendas);
+    }
+
+    //DELETE COM BASE NO ID
+    @Transactional
+    public void deletarRenda(Integer id){
+        renda rendas = rendaRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("not found"));
+        rendaRepository.delete(rendas);
+        
     }
 }
