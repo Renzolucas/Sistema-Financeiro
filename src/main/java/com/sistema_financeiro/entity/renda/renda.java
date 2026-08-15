@@ -3,7 +3,7 @@ package com.sistema_financeiro.entity.renda;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sistema_financeiro.entity.user.user;
+import com.sistema_financeiro.entity.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class renda {
+public class Renda {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Integer id;
@@ -36,6 +36,6 @@ public class renda {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
-    private user user;
+    private User user;
 
 }
