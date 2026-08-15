@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 public class GastoService {
     private final GastoRepository gastoRepository;
     private final UserRepository userRepository;
+
     //POST GASTO
     public GastoBodyDTO createBody(Integer id, GastoBodyDTO dto){
         user usuario = userRepository.findById(id)
@@ -36,10 +37,27 @@ public class GastoService {
             gasto.getDataHora()
         );
     }
+
+    //GET DE GASTO COM BASE NO ID
+    public GastoBodyDTO buscarGastoPorId(Integer id){
+        gasto gastos = gastoRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("not found"));
+        
+        return new GastoBodyDTO(
+            gastos.getNome(),
+            gastos.getValor(),
+            gastos.getCategoria(),
+            gastos.getDataHora()
+        );
+    }
+
+    //DELETE
     @Transactional
     public void deletarGasto(Integer id){
         gasto gastos = gastoRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("Not found Gasto"));
         gastoRepository.delete(gastos);
     }
+
+
 }
