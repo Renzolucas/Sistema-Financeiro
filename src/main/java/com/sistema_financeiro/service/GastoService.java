@@ -38,7 +38,7 @@ public class GastoService {
         );
     }
 
-    //GET DE GASTO COM BASE NO ID
+    //GET COM BASE NO ID GASTO
     public GastoBodyDTO buscarGastoPorId(Integer id){
         gasto gastos = gastoRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("not found"));
@@ -47,6 +47,26 @@ public class GastoService {
             gastos.getNome(),
             gastos.getValor(),
             gastos.getCategoria(),
+            gastos.getDataHora()
+        );
+    }
+
+    //PUT COM BASE NO ID GASTO
+    public GastoBodyDTO editarGastoPorId(Integer id, GastoBodyDTO dto){
+        gasto gastos = gastoRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("not found"));
+
+        VerificadorDeNulos.atualizarSeNaoNulo(dto.nome(), gastos::setNome);
+        VerificadorDeNulos.atualizarSeNaoNulo(dto.valor(), gastos::setValor);
+        VerificadorDeNulos.atualizarSeNaoNulo(dto.categoria(), gastos::setCategoria);
+        VerificadorDeNulos.atualizarSeNaoNulo(dto.dataHora(), gastos::setDataHora);
+        
+        gastoRepository.save(gastos);
+
+        return new GastoBodyDTO(
+            gastos.getNome(),  
+            gastos.getValor(),
+            gastos.getCategoria(), 
             gastos.getDataHora()
         );
     }

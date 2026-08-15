@@ -4,12 +4,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema_financeiro.entity.gasto.dto.GastoBodyDTO;
 import com.sistema_financeiro.service.GastoService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -25,6 +28,15 @@ public class GastoController {
         return ResponseEntity.ok().body(gastoBuscado);
     }
 
+    //PUT POR ID
+    @PutMapping("/{id}")
+    public ResponseEntity<GastoBodyDTO> editarGasto(
+        @PathVariable Integer id,
+        @Valid @RequestBody GastoBodyDTO dto
+    ){
+        GastoBodyDTO gastoEditado = gastoService.editarGastoPorId(id, dto);
+        return ResponseEntity.created(null).body(gastoEditado);
+    }
 
     //DELETE
     @DeleteMapping("/{id}")
