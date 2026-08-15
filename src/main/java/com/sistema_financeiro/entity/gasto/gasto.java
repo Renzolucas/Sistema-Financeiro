@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema_financeiro.entity.gasto.enums.Categoria;
-import com.sistema_financeiro.entity.user.user;
+import com.sistema_financeiro.entity.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class gasto {
+public class Gasto {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Integer id;
@@ -42,5 +42,5 @@ public class gasto {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
-    private user user;
+    private User user;
 }

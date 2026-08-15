@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema_financeiro.entity.gasto.dto.GastoBodyDTO;
-import com.sistema_financeiro.entity.gasto.gasto;
-import com.sistema_financeiro.entity.user.user;
+import com.sistema_financeiro.entity.gasto.Gasto;
+import com.sistema_financeiro.entity.user.User;
 import com.sistema_financeiro.repository.GastoRepository;
 import com.sistema_financeiro.repository.UserRepository;
 
@@ -18,7 +18,7 @@ public class GastoService {
     private final UserRepository userRepository;
     
     //MODELO DO DTO
-    public static GastoBodyDTO fazerDTO(gasto gastos){
+    public static GastoBodyDTO fazerDTO(Gasto gastos){
         return new GastoBodyDTO(
             gastos.getNome(),
             gastos.getValor(),
@@ -29,10 +29,10 @@ public class GastoService {
 
     //POST GASTO
     public GastoBodyDTO createBody(Integer id, GastoBodyDTO dto){
-        user usuario = userRepository.findById(id)
+        User usuario = userRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("Not found User"));
         
-        gasto gastos = new gasto();
+        Gasto gastos = new Gasto();
         gastos.setUser(usuario);
         gastos.setNome(dto.nome());
         gastos.setValor(dto.valor());
@@ -45,7 +45,7 @@ public class GastoService {
 
     //GET COM BASE NO ID GASTO
     public GastoBodyDTO buscarGastoPorId(Integer id){
-        gasto gastos = gastoRepository.findById(id)
+        Gasto gastos = gastoRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("not found"));
         
         return fazerDTO(gastos);
@@ -53,7 +53,7 @@ public class GastoService {
 
     //PUT COM BASE NO ID GASTO
     public GastoBodyDTO editarGastoPorId(Integer id, GastoBodyDTO dto){
-        gasto gastos = gastoRepository.findById(id)
+        Gasto gastos = gastoRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("not found"));
 
         VerificadorDeNulos.atualizarSeNaoNulo(dto.nome(), gastos::setNome);
@@ -69,7 +69,7 @@ public class GastoService {
     //DELETE
     @Transactional
     public void deletarGasto(Integer id){
-        gasto gastos = gastoRepository.findById(id)
+        Gasto gastos = gastoRepository.findById(id)
             .orElseThrow(()-> new RuntimeException("Not found Gasto"));
         gastoRepository.delete(gastos);
     }

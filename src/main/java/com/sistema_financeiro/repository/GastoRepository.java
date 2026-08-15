@@ -2,8 +2,8 @@ package com.sistema_financeiro.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sistema_financeiro.entity.gasto.gasto;
+import com.sistema_financeiro.entity.gasto.Gasto;
 
-public interface GastoRepository extends JpaRepository<gasto, Integer> {
+public interface GastoRepository extends JpaRepository<Gasto, Integer> {
     
 }
