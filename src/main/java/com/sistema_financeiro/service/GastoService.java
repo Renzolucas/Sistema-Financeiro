@@ -26,12 +26,14 @@ public class GastoService {
         gasto.setNome(dto.nome());
         gasto.setValor(dto.valor());
         gasto.setCategoria(dto.categoria());
+        gasto.setDataHora(dto.dataHora());
 
         gastoRepository.save(gasto);
         return new GastoBodyDTO(
             gasto.getNome(),
             gasto.getValor(),
-            gasto.getCategoria()
+            gasto.getCategoria(),
+            gasto.getDataHora()
         );
     }
     @Transactional
