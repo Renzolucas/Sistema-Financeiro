@@ -2,6 +2,7 @@ package com.sistema_financeiro.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     
     //MODELO DTO
     public ResponseUserDTO userDTO(User users){
@@ -41,7 +43,7 @@ public class UserService {
         //SETO OS CAMPOS COM O DTO QUE VEIO DA WEB
         users.setNome(dto.nome());
         users.setEmail(dto.email()); 
-        users.setSenha(dto.senha());
+        users.setSenha(passwordEncoder.encode(dto.senha()));
 
         //SALVO O NOVO OBJETO USER NO BANCO DE DADOS E RETORNO ELE
         userRepository.save(users);
