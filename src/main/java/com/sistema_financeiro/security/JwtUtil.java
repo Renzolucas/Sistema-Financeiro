@@ -21,14 +21,22 @@ public class JwtUtil {
     //gera novo token contendo email e uma data expirante
     public String gerarToken(String email){
         return Jwts.builder()
+        //CRACHA
+                //o identificador
                 .subject(email)//dono do token
+
+                //data de inicio/expiração do cracha
                 .issuedAt(new Date())//data de criacao
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 *60 *10))
+
+                //assinatura pra saber que foi esse sistema qm o criou
                 .signWith(getChave())
                 .compact();
     }
-    //Extrai o email de dentro e um token ja existente
+    //Extrai o email e um token ja existente
     public String extrairEmail(String token){
+        //Aqui vai ser a etapa aonde o back-end verifica toda vez que o usuario faz uma requisição
+        //ele recebe so uma string token, aqui será aberto o arquivo e "lido" todo conteudo dentro de token 
         return Jwts.parser()
                 .verifyWith(getChave())
                 .build()
