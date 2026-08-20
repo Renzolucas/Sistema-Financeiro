@@ -2,6 +2,7 @@ package com.sistema_financeiro.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ public class SecutiryConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()//libera sem login pra essa rota
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyRequest().authenticated()//qualquer outra rota exige token valido
             );
 
